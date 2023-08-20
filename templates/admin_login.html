@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% extends 'home.html' %}
+{% block title %}Admin Login{% endblock %}
+{% block content %}
+{% load static %}
+
+<!-- css file  -->
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/admin.css'%}" />
+
+<div class="container">
+    {% if messages %}
+
+    {% for result in messages %}
+    {% if result.tags == "error" %}
+    <div class="alert alert-danger">
+        {{ result }}
+    </div>
+    {% else %}
+    <div class="alert alert-success">
+        {{ result }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card my-5">
+                <h2 class="text-center text-dark mt-5">Admin Login</h2>
+                <form class="card-body cardbody-color p-lg-5" method="POST">
+                    {% csrf_token %}
+                    <div class="text-center">
+                        <img src="static/images/admin.png"
+                            class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3" width="100px"
+                            alt="profile">
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" size="300px" class="form-control" id="Username" aria-describedby="emailHelp"
+                            placeholder="Username" name="adminUsername" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" id="password" placeholder="Password"
+                            name="adminPass" required>
+                    </div>
+                    <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

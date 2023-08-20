@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+{% extends 'home.html' %}
+{% block title %}View Post{% endblock %}
+{% block content %}
+{% load static %}
+
+<style>
+    .col-6 .card-img {
+        animation: zoomin 1s linear 1;
+        animation-delay: 0.6s;
+        visibility: hidden;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes zoomin {
+        0% {
+            transform: scale(0.5);
+            visibility: visible;
+        }
+
+        100% {
+            transform: scale(1);
+            visibility: visible;
+
+        }
+    }
+</style>
+
+<h4></h4>
+<h3>View Post</h3>
+<hr>
+
+{% if messages %}
+{% for result in messages %}
+<div>&ensp;</div>
+{% if result.tags == "error" %}
+<div class="alert alert-danger">
+    {{ result }}
+</div>
+{% else %}
+<div class="alert alert-success">
+    {{ result }}
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% for post in posts %}
+<div class="row justify-content-center" style="align-items: center;">
+    <div class="col-10">
+        <h3><b>{{post.19}}</b></h3>
+        <h6></h6>
+        <h6>Posted on {{post.25}}</h6>
+        <h6><span class="material-icons icons-size-bg">wrong_location</span><b>&nbsp;&nbsp;{{post.21}}</b></h6>
+    </div>
+    {% if request.session.email %}
+    {% if post.2 == request.session.email %}
+    <div class="col-2" style="align-items: center;">
+        <button type="button" class="btn btn-primary" onclick="location.href='/edit-post/{{post.16}}/'">Edit
+            Post</button>
+    </div>
+    {% else %}
+    <div class="col-2" style="align-items: center;">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Claim
+            Ownership</button>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="col-2" style="align-items: center;">
+        <button type="button" class="btn btn-primary" onclick="location.href='../../authenticate'">Login to
+            Claim</button>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Modal Popup -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form method="POST" enctype="multipart/form-data" action="/claim-owner/{{post.17}}/">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="align-items: center; text-align: center;">
+                        Warning</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to claim ownership of this material?Fake claim may ban you for 1 month.& Proctor Decision Will be Final Decision.If once
+                        accepted, it can't be undo.
+                        <br><b>Note That: Your Profile must be 100% completed. Otherwise you will get rejection.</b>
+                    </p> 
+                    <p>
+                        If You Have a Picture's Of Yours Product or lost Item Please Provide Us
+                        <center><strong>"Mandatory"</strong></center>
+                    </p>
+                    <br>
+                    <input type="file" required placeholder="Choose a file to verify owner" name="secretPic">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary"
+                        onclick="location.href='/claim-owner/{{post.17}}/'">Claim</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+<div class="row" style="align-items: center;">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div class="card-img"><img src="../../{{post.23}}" alt="bkash-payment-logo" style="width: 100%;
+    height: auto;
+    object-fit: cover;"></div>
+    </div>
+    <div class="col-3"></div>
+</div>
+<br>
+<br>
+<div class="row justify-content-center" style="align-items: center;">
+    <div class="col-9" onmouseover="" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#staticBackdropp">
+        {% if post.12 %}
+        <img src="../../{{post.12}}" height="55px" width="55px"
+            style="border: 3px solid #0b5ed7; padding: 0.1em; border-radius: 50%;"
+            alt="user image" /><b>&ensp;{{post.1}}</b>
+        {% else %}
+        <img src="{% static 'images/default_dp.gif' %}" height="55px" width="55px"
+            style="border: 3px solid #0b5ed7; padding: 0.1em; border-radius: 50%;"
+            alt="user image" /><b>&ensp;{{post.1}}</b>
+        {% endif %}
+    </div>
+    <div class="col-3" style="text-align: end;">
+        <b>Losted on {{post.22}}</b>
+    </div>
+</div>
+<br>
+<p style="white-space: pre-wrap; font-size: 18px; text-align: justify;">{{post.20}}</p>
+<br>
+<br>
+<br>
+
+<div class="modal fade" id="staticBackdropp" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form method="POST" enctype="multipart/form-data" action="/claim-owner/{{post.17}}/">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabell" style="align-items: center; text-align: center;">
+                        Post Publisher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        <img src="../../{{post.12}}" alt="{{user.name}}" class="img-fluid img-thumbnail">
+                        <br>
+                        <br>
+                        <h3
+                            style="text-align: center; align-items: center; align-content: center; margin-bottom: 0.5em;">
+                            <b>&ensp;{{post.1}} </b>
+                        </h3>
+                        <b style="text-align: center; align-items: center; align-content: center;">
+                            <h5>Profile Complited : &ensp;{{post.7}}</h5>
+                        </b>
+                        <p style="text-align: center; align-items: center; align-content: center;">
+                            &ensp;{{post.5}}
+                        </p>
+                    </div>
+                    <br>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

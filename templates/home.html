@@ -1,0 +1,624 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<style>
+    .container-fluid {
+        animation: movedown 1s linear 1;
+        animation-delay: 0.1s;
+        visibility: hidden;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes movedown {
+        0% {
+            transform: translateY(-100px);
+            visibility: visible;
+        }
+
+        100% {
+            transform: translateY(0);
+            visibility: visible;
+        }
+    }
+
+    .custom-center {
+        animation: moveright 1s linear;
+        animation-delay: 0.5s;
+        visibility: hidden;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes moveright {
+        0% {
+            transform: translateX(-100px);
+            visibility: visible;
+        }
+
+        100% {
+            transform: translateX(0);
+            visibility: visible;
+        }
+    }
+
+    .col-md-5 .row-2 {
+        animation: moveright 1.5s linear 1;
+        animation-delay: 0.5s;
+        visibility: hidden;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes moveright {
+        0% {
+            transform: translateX(-100px);
+            visibility: visible;
+        }
+
+        100% {
+            transform: translateX(0);
+            visibility: visible;
+        }
+    }
+
+    .col-md-5 .row-3 {
+        animation: moveright 1.5s linear 1;
+        animation-delay: 0.5s;
+        visibility: hidden;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes moveright {
+        0% {
+            transform: translateX(-100px);
+            visibility: visible;
+        }
+
+        100% {
+            transform: translateX(0);
+            visibility: visible;
+        }
+    }
+
+    .col-md-5 .row-5 {
+        animation: moveright 1.5s linear 1;
+        animation-delay: 0.5s;
+        visibility: hidden;
+        animation-fill-mode: forwards;
+
+    }
+
+    .option {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 120px;
+        padding-right: 120px;
+    }
+
+
+    @keyframes moveright {
+        0% {
+            transform: translateX(-100px);
+            visibility: visible;
+        }
+
+        100% {
+            transform: translateX(0);
+            visibility: visible;
+        }
+    }
+
+    /* ------------for image----------- */
+
+    .col-md-7 .responsive {
+        animation: zoomin 1s linear 1;
+        animation-delay: 0.6s;
+        visibility: hidden;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes zoomin {
+        0% {
+            transform: scale(0.5);
+            visibility: visible;
+        }
+
+        100% {
+            transform: scale(1);
+            visibility: visible;
+
+        }
+    }
+</style>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A website which will help to find out your lost items">
+    <meta name="author" content="Md. Sabik Alam Rahat, A self-learner full stack developer.">
+    <meta name="generator" content="Coding Table">
+
+    <link rel="stylesheet" type="text/css" id="mydefaultstylesheet" href="{% static 'css/default.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'Brac_University_Logo.png' %}">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script src="{%static 'js/location.js' %}"></script>
+
+    <!-- Title -->
+    <title>{% block title %}Lost & Found{% endblock %}</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="sticky-lg-top" style="box-shadow: 5px 5px 5px rgb(167, 165, 165);">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid" style="margin-left: 2em; margin-right: 2em;">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'images/Brac_University_Logo.png' %}" height="30px" width="30px"
+                        class="d-inline-block align-top" alt="lost and found image" />
+                    <b>&ensp;Lost & Found</b>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'home' %}"><b>Home</b></a>
+                        </li>
+                        {% if request.session.email %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'view-profile' %}"><b>View Pofile</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}"><b>Log Out</b></a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'authenticate' %}"><b>Sign Up/Login</b></a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'contact' %}"><b>Contact</b></a>
+                        </li>
+                    </ul>
+                    {% if request.session.email %}
+                    <b>
+                        <p id="nameshow"
+                            style="color: rgb(13, 184, 13); text-align: center; margin: 0.3em; padding-right: 1em;"></p>
+                    </b>
+                    
+                    {% endif %}
+                    <script type="text/javascript">
+                        var email = "{% if request.session.email %}{{ request.session.email }}{% endif %}";
+                        const username = ' | Hello, ' + email.split("@")[0] + ' | ';
+                        document.getElementById("nameshow").innerHTML = username;
+                    </script>
+                    <div>
+                        <!-- css file  -->
+                        <link rel="stylesheet" type="text/css" href="{% static 'css/user_dropdown.css'%}" />
+                        <div class="action">
+                            <div class="profile" onclick="menuToggle();">
+                                {% if user.profileImg %}
+                                <img src="../../{{user.profileImg.url}}" alt="{{user.name}}"
+                                    style="border: 3px solid #0b5ed7; object-fit: cover; padding: 0.05em; border-radius: 50%; align-items: center;">
+                                {% else %}
+                                <img src="{% static 'images/menubar.png' %}" alt="{{user.name}}"
+                                    style="border: 3px solid #0b5ed7; object-fit: cover; padding: 0.05em; border-radius: 50%; align-items: center;">
+                                {% endif %}
+                            </div>
+                            <div class="menu">
+                                {% if request.session.email %}
+                                <h3>
+                                    User Account<div>{{user.name}}</div>
+                                </h3>
+                                {% else %}
+                                <h3>
+                                    User Account<div>Lost and Found</div>
+                                </h3>
+                                {% endif %}
+                                <ul>
+                                    {% if request.session.email %}
+                                    <li>
+                                        <span class="material-icons icons-size-bg">insert_comment</span>
+                                        <a href="{% url 'write-post' %}">Write Post</a>
+                                    </li>
+                                    <li>
+                                        <span class="material-icons icons-size-bg">engineering</span>
+                                        <a href="{% url 'admin-login' %}">Admin Panel</a>
+                                    </li>
+                                    <!-- <li>
+                                        <span class="material-icons icons-size-bg">request_quote</span>
+                                        <a href="{% url 'point-purchase' %}">Point Purchase</a>
+                                    </li> -->
+                                    <li>
+                                        <span class="material-icons icons-size-bg">phone</span>
+                                        <a href="{% url 'contact' %}">Contact</a>
+                                    </li>
+                                    <li>
+                                        <span class="material-icons icons-size-bg">person</span>
+                                        <a href="{% url 'view-profile' %}">My Profile</a>
+                                    </li>
+                                    <li>
+                                        <span class="material-icons icons-size-bg">mode</span>
+                                        <a href="{% url 'edit-profile' %}">Edit Account</a>
+                                    </li>
+                                    <li>
+                                        <span class="material-icons icons-size-bg">lock_open</span>
+                                        <a href="{% url 'forget-password' %}">Reset Password</a>
+                                    </li>
+                                    <li>
+                                        <span class="material-icons icons-size-bg">logout</span>
+                                        <a href="{% url 'logout' %}">Logout</a>
+                                    </li>
+                                    {% else %}
+                                    <li>
+                                        <span class="material-icons icons-size-bg">person</span>
+                                        <a href="{% url 'authenticate' %}">Log in</a>
+                                    </li>
+                                    <li>
+                                        <span class="material-icons icons-size-bg">phone</span>
+                                        <a href="{% url 'contact' %}">Contact</a>
+                                    </li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        function menuToggle() {
+                            const toggleMenu = document.querySelector('.menu');
+                            toggleMenu.classList.toggle('active')
+                        }
+                    </script>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Part -->
+    <div class="container">
+        <div class="row m-10">
+            <div class="col-12">
+                {% block content %}
+                <!-- Reuseable Content -->
+                {% if messages %}
+                {% for result in messages %}
+                {% if result.tags == "error" %}
+                <div class="alert alert-danger">
+                    {{ result }}
+                </div>
+                {% else %}
+                <div class="alert alert-success">
+                    {{ result }}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                <!-- hearder start -->
+                <div class="row justify-content-center"
+                    style="margin-top: 2em; margin-bottom: 2em; align-items: center;">
+                    <div class="col-md-5">
+                        <div class="col">
+                            <div class="row-2">
+                                <h6>Welcome To</h6>
+                            </div>
+                            <div class="row-3">
+                                <h3><STRong>Brac University Lost and Found</STRong></h3>
+                            </div>
+                            <br>
+                            <div class="row-5">
+                                <p>
+                                    Welcome to BRAC University Lost & Found! We help you recover lost items and foster a caring community. Report lost or found items effortlessly, with secure ownership verification overseen by our admin team. Together, we create a safer campus environment. A nominal charge may apply for claiming items. Join us in building a close-knit community that looks out for one another's belongings. Your contribution can make a significant impact in reuniting lost materials.
+                                </p>
+                            </div>
+                            <div class="row-2">
+                                <button type="button" class="btn btn-outline-primary"
+                                    onclick="location.href='write-post'">
+                                    Submit Found Item
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <img class="responsive" src="{% static 'images/banner1.png' %}" height="420px"
+                            width="100%;">
+                    </div>
+                </div>
+                <!-- header finished -->
+                <br>
+                <br>
+                <!-- second hearder start -->
+                <div class="row justify-content-center"
+                    style="margin-top: 2em; margin-bottom: 2em; align-items: center;">
+                    <div class="col-md-7">
+                        <img class="responsive" src="{% static 'images/banner3.jpg' %}" height="400px"
+                            width="90%;">
+                    </div>
+                    <div class="col-md-5">
+                        <div class="col">
+                            <div class="row-2">
+                                <h6>Find your</h6>
+                            </div>
+                            <div class="row-3">
+                                <h3>Lost Material by Location</h3>
+                            </div>
+                            <br>
+                            <div class="row-5">
+                                <div class="form-group">
+                                    <label for="location_field">Search Location</label>
+                                    <br>
+                                    <style>
+                                        @media screen and (-webkit-min-device-pixel-ratio:0) {
+
+                                            /*safari and chrome*/
+                                            select {
+                                                height: 42px;
+                                                width: 100%;
+                                                line-height: 50px;
+                                                background: #f4f4f4;
+                                                border: 3px solid #0d6efd;
+                                                border-radius: 5px;
+                                            }
+                                        }
+
+                                        select::-moz-focus-inner {
+                                            /*Remove button padding in FF*/
+                                            border: 0;
+                                            padding: 0;
+                                        }
+
+                                        @-moz-document url-prefix() {
+
+                                            /* targets Firefox only */
+                                            select {
+                                                padding: 15px 0 !important;
+                                            }
+                                        }
+
+                                        @media screen\0 {
+
+                                            /* IE Hacks: targets IE 8, 9 and 10 */
+                                            select {
+                                                height: 42px;
+                                                width: 100%;
+                                                line-height: 50px;
+                                                background: #f4f4f4;
+                                                border: 2px solid #0d6efd;
+                                                border-radius: 5px;
+                                            }
+                                        }
+                                    </style>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <select name="locatn" onchange="this.form.submit()">
+                                            <option disabled="true">Select your location to filter post</option>
+                                            {% if search == 'All' %}
+                                            <option value="All" selected>All Types </option>
+                                            {% else %}
+                                            <option value="All">All Types </option>
+                                            {% endif %}
+                                            {% for lctn in locations %}
+                                            {% if search == lctn %}
+                                            <option value="{{lctn}}" selected>{{lctn}}</option>
+                                            {% else %}
+                                            <option value="{{lctn}}">{{lctn}}</option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </form>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+                <!-- second header finished -->
+                <br>
+                <br>
+                <div class="row">
+                    {% for post in posts %}
+                    <div class="col-md-4">
+                        <div onclick="location.href='/view-post/{{post.0}}/'">
+                            <link rel="stylesheet" type="text/css" href="{% static 'css/post_card.css'%}" />
+                            <main>
+                                <div class="card"
+                                    style="background-image:url('{{post.7}}'); background-position: center;">
+                                    <div class="info">
+                                        <h1 class="title">{{post.3}}</h1>
+                                        <h6>&emsp;&ensp;Found at&nbsp;<b>{{post.5}}</b></h6>
+                                        <p class="description">{{post.4}}</p>
+                                    </div>
+                                </div>
+                            </main>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <div>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css'%}" />
+        <footer id="dk-footer" class="dk-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-4">
+                        <div class="dk-footer-box-info">
+                            <a href="index.html" class="footer-logo">
+                                <img src="/static/images/log.svg" alt="footer_logo" class="img-fluid">
+                            </a>
+                            <div class="footer-social-link" style="margin-top: 3em;">
+                                <h3>Follow us</h3>
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-google-plus"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-linkedin"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="fa fa-instagram"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Footer info -->
+                    </div>
+                    <div class="col-md-12 col-lg-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="contact-us">
+                                    <div class="contact-icon">
+                                        <i class="fa fa-map-o" aria-hidden="true"></i>
+                                    </div>
+                                    <!-- End contact Icon -->
+                                    <div class="contact-info">
+                                        <h3>66 Mohakhali,</h3>
+                                        <p>Dhaka 1212,Bangladesh</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="contact-us contact-us-last">
+                                    <div class="contact-icon">
+                                        <i class="fa fa-volume-control-phone" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="contact-info">
+                                        <h3>+8801762259976</h3>
+                                        <p>Give us a call</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-6">
+                                <div class="footer-widget footer-left-widget">
+                                    <div class="section-heading">
+                                        <h3>Useful Links</h3>
+                                        <span class="animate-border border-black"></span>
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <a href="#">About us</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Services</a>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
+                                            <a href="#">Our Team</a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'contact' %}">Contact</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-lg-6">
+                                <div class="footer-widget">
+                                    <div class="section-heading">
+                                        <h3>Lost and Found</h3>
+                                        <span class="animate-border border-black"></span>
+                                    </div>
+                                    <p style="color: white;">
+                                        Find your lost materials and also help others to find their lost items.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <span>© 2023 Brac University. All rights reserved. | Privacy</span>
+                        </div>
+                        <!-- End Col -->
+                        <div class="col-md-6">
+                            <div class="copyright-menu">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'home' %}">Home</a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="{% url 'feedback' %}" target="_blank">Feedback</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Back to top -->
+            <div id="back-to-top" class="back-to-top">
+                <a href="#top"><button class="btn btn-dark" title="Back to Top" style="display: block;">
+                        <i class="fa fa-angle-up"></i>
+                    </button></a>
+            </div>
+            <!-- End Back to top -->
+        </footer>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
